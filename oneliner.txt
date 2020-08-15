@@ -46,3 +46,7 @@ find_cert(){
 endpointfromjs(){
         cat $1 | grep -oh "\"\/[a-zA-Z0-9_/?=&]*\"" | sed -e 's/^"//' -e 's/"$//' | sort -u
 }
+
+Parmasfinder(){
+        cat subdomains.txt | hakrawler | grep 'http' | cut -d  ' ' -f2>crawling.txt && gau --subs domain.com >>crawling.txt;waybackurls domain.com>>crawling.txt && cat crawling.txt | grep '?' | unfurl --unique format %s://%d%p >base.txt;cat base.txt | parallel -j 4 grep {} -m5 crawling.txt | tee final1.txt;cat final1.txt | egrep -iv ".(jpg|gif|jpeg|css|tif|tiff|png|ttf|woff|woff2|ico|pdf|svg|txt|js)" >final.txt && rm -rf base.txt final1.txt
+}

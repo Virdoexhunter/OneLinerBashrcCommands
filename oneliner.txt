@@ -53,3 +53,8 @@ Parmasfinder(){
 ssrf_redirect(){
         cat $1 | gau   | head -n 5000 > google.txt; cat google.txt | sort -u | grep -a -i \=http > ssrf_redirects.txt
 }
+otx()
+{
+    gron "https://otx.alienvault.com/otxapi/indicator/hostname/url_list/$1?limit=100&page=1" | grep "\burl\b" | gron --ungron | jq
+}
+

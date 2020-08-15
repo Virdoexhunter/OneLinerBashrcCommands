@@ -50,3 +50,6 @@ endpointfromjs(){
 Parmasfinder(){
         cat subdomains.txt | hakrawler | grep 'http' | cut -d  ' ' -f2>crawling.txt && gau --subs domain.com >>crawling.txt;waybackurls domain.com>>crawling.txt && cat crawling.txt | grep '?' | unfurl --unique format %s://%d%p >base.txt;cat base.txt | parallel -j 4 grep {} -m5 crawling.txt | tee final1.txt;cat final1.txt | egrep -iv ".(jpg|gif|jpeg|css|tif|tiff|png|ttf|woff|woff2|ico|pdf|svg|txt|js)" >final.txt && rm -rf base.txt final1.txt
 }
+ssrf_redirect(){
+        cat $1 | gau   | head -n 5000 > google.txt; cat google.txt | sort -u | grep -a -i \=http > ssrf_redirects.txt
+}
